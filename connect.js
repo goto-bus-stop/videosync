@@ -32,6 +32,7 @@ module.exports = function connect (name) {
     }
 
     emitter.on('broadcast', broadcast)
+    emitter.emit('self', { id: sw.me, name })
 
     state.swarm = sw
   }

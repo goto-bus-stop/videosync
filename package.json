@@ -7,6 +7,8 @@
   "author": "Renée Kooi <renee@kooi.me>",
   "license": "MIT",
   "dependencies": {
+    "bel": "^4.5.1",
+    "choo": "yoshuawuyts/choo#v5",
     "signalhub": "^4.8.0",
     "webrtc-swarm": "^2.8.0"
   },

@@ -6,6 +6,7 @@ const connect = require('./connect')
 const App = require('./view/App')
 
 css('tachyons')
+css('video.js')
 
 const conn = connect(prompt('Your name'))
 

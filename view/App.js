@@ -5,8 +5,6 @@ const Video = require('./Video')
 const video = Video()
 
 module.exports = function App (state, emit) {
-  console.log('app', state.video)
-
   return html`
     <body class="vh-100">
       <div class="fl w-75 h-100 ph2">

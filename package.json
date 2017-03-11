@@ -14,6 +14,7 @@
     "signalhub": "^4.8.0",
     "tachyons": "^4.6.2",
     "video.js": "^5.17.0",
+    "videojs-vimeo": "^2.0.2",
     "videojs-youtube": "^2.3.2",
     "webrtc-swarm": "^2.8.0"
   },

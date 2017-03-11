@@ -1,7 +1,10 @@
 const choo = require('choo')
 const html = require('bel')
+const css = require('sheetify')
 const model = require('./model')
 const connect = require('./connect')
+
+css('tachyons')
 
 const conn = connect(prompt('Your name'))
 

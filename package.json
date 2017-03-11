@@ -9,12 +9,19 @@
   "dependencies": {
     "bel": "^4.5.1",
     "choo": "yoshuawuyts/choo#v5",
+    "sheetify": "^6.0.1",
     "signalhub": "^4.8.0",
+    "tachyons": "^4.6.2",
     "webrtc-swarm": "^2.8.0"
   },
   "devDependencies": {
     "browserify": "^14.1.0",
     "ecstatic": "^2.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "sheetify/transform"
+    ]
   },
   "scripts": {
     "build": "browserify app.js > bundle.js",

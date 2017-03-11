@@ -19,6 +19,15 @@ const prefix = css`
   }
 `
 
+function ChatMessage (state, { sender, message }) {
+  return html`
+    <p>
+      <strong>${state.users[sender].name}</strong>
+      ${message}
+    </p>
+  `
+}
+
 const mainView = (state, emit) => {
   return html`
     <body class="${prefix} vh-100">
@@ -27,12 +36,7 @@ const mainView = (state, emit) => {
       </div>
       <div class="chat fl w-25 ph2 h-100">
         <div class="chat-messages">
-          ${state.chat.map((message) => html`
-            <p>
-              <strong>${state.users[message.sender].name}</strong>
-              ${message.message}
-            </p>
-          `)}
+          ${state.chat.map(ChatMessage.bind(null, state))}
         </div>
         <div class="pv2">
           <input class="w-100 ba b--dark-pink pa2"

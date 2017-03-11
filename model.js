@@ -1,6 +1,9 @@
 module.exports = (state, emitter) => {
   state.users = {}
   state.chat = []
+  state.video = {
+    url: 'https://youtu.be/M3GAkXvKQ4c'
+  }
 
   function updated () {
     emitter.emit('render')
@@ -46,4 +49,9 @@ module.exports = (state, emitter) => {
 
   emitter.on('self', onself)
   emitter.on('message', onreceive)
+
+  window.changeVideo = (url) => {
+    state.video = Object.assign({}, state.video, { url })
+    updated()
+  }
 }

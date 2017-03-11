@@ -8,10 +8,13 @@
   "license": "MIT",
   "dependencies": {
     "bel": "^4.5.1",
+    "cache-element": "^2.0.1",
     "choo": "yoshuawuyts/choo#v5",
     "sheetify": "^6.0.1",
     "signalhub": "^4.8.0",
     "tachyons": "^4.6.2",
+    "video.js": "^5.17.0",
+    "videojs-youtube": "^2.3.2",
     "webrtc-swarm": "^2.8.0"
   },
   "devDependencies": {
@@ -27,6 +30,6 @@
   "scripts": {
     "build": "browserify app.js > bundle.js",
     "watch": "watchify app.js -o bundle.js",
-    "start": "ecstatic . -p 3001"
+    "start": "ecstatic . -p 3001 --cache 0"
   }
 }

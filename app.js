@@ -35,8 +35,7 @@ function onreceive (peer, pack) {
     model.setUserName(peer.id, payload)
   }
   if (type === 'chat') {
-    const sender = model.users[peer.id]
-    console.log(sender.name, payload)
+    model.chatMessage(peer.id, payload)
   }
 }
 

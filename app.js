@@ -19,10 +19,11 @@ const prefix = css`
   }
 `
 
-function ChatMessage (state, { sender, message }) {
+function ChatMessage (state, { sender, message, time }) {
   return html`
-    <p>
-      <strong>${state.users[sender].name}</strong>
+    <p class="ma0 pv2">
+      <time class="fr gray">${time.toLocaleTimeString()}</time>
+      <strong class="dark-gray">${state.users[sender].name}</strong>
       ${message}
     </p>
   `

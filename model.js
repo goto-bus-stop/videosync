@@ -25,7 +25,7 @@ module.exports = (state, emitter) => {
   }
 
   function receiveChat ({ sender, message }) {
-    state.chat.push({ sender, message })
+    state.chat.push({ sender, message, time: new Date() })
     updated()
   }
 

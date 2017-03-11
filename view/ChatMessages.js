@@ -1,8 +1,20 @@
 const html = require('bel')
+const css = require('sheetify')
+
+const prefix = css`
+  :host {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :host .chat-messages {
+    flex-grow: 1;
+  }
+`
 
 module.exports = function ChatMessages (state, emit) {
   return html`
-    <div class="chat fl w-25 ph2 h-100">
+    <div class="${prefix} fl w-25 ph2 h-100">
       <div class="chat-messages">
         ${state.chat.map(ChatMessage)}
       </div>

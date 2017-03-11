@@ -1,0 +1,9 @@
+{
+  "name": "videosync",
+  "version": "0.0.0",
+  "description": "Watch videos together from a variety of sources, synced over WebRTC.",
+  "main": "index.js",
+  "repository": "goto-bus-stop/videosync",
+  "author": "Renée Kooi <renee@kooi.me>",
+  "license": "MIT"
+}

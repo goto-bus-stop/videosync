@@ -8,24 +8,46 @@ css('tachyons')
 
 const conn = connect(prompt('Your name'))
 
+const prefix = css`
+  :host .chat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :host .chat-messages {
+    flex-grow: 1;
+  }
+`
+
 const mainView = (state, emit) => {
   return html`
-    <body>
-      <h1>Hello world</h1>
-      <ul>
-        ${Object.entries(state.users).map(([ id, { name } ]) => html`
-          <li>${name}</li>
-        `)}
-      </ul>
-      <div>
-        ${state.chat.map((message) => html`
-          <p>
-            <strong>${state.users[message.sender].name}</strong>
-            ${message.message}
-          </p>
-        `)}
+    <body class="${prefix} vh-100">
+      <div class="fl w-75 h-100 ph2">
+        <h1>Video here</h1>
       </div>
-      <input onkeydown=${oninput} placeholder="Chat" />
+      <div class="chat fl w-25 ph2 h-100">
+        <div class="chat-messages">
+          ${state.chat.map((message) => html`
+            <p>
+              <strong>${state.users[message.sender].name}</strong>
+              ${message.message}
+            </p>
+          `)}
+        </div>
+        <div class="pv2">
+          <input class="w-100 ba b--dark-pink pa2"
+                 type="text"
+                 onkeydown=${oninput}
+                 placeholder="Chat" />
+        </div>
+      </div>
+      <div class="users w-25 dn">
+        <ul class="list">
+          ${Object.entries(state.users).map(([ id, { name } ]) => html`
+            <li>${name}</li>
+          `)}
+        </ul>
+      </div>
     </body>
   `
 

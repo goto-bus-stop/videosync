@@ -5,5 +5,17 @@
   "main": "index.js",
   "repository": "goto-bus-stop/videosync",
   "author": "Renée Kooi <renee@kooi.me>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "signalhub": "^4.8.0",
+    "webrtc-swarm": "^2.8.0"
+  },
+  "devDependencies": {
+    "browserify": "^14.1.0",
+    "ecstatic": "^2.1.0"
+  },
+  "scripts": {
+    "build": "browserify app.js > bundle.js",
+    "start": "ecstatic . -p 3001"
+  }
 }

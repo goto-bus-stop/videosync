@@ -1,41 +1,21 @@
-const signalhub = require('signalhub')
-const swarm = require('webrtc-swarm')
 const model = require('./model')
+const connect = require('./connect')
 
 const name = prompt('Your name')
 
-const hub = signalhub('videosync', [
-  'http://localhost:3000'
-])
-const sw = swarm(hub)
-
-sw.on('connect', (peer, id) => {
-  peer.send(JSON.stringify({
-    type: 'nick',
-    payload: name
-  }))
-
-  peer.on('data', (pack) => {
-    onreceive(peer, pack)
-  })
-})
+const conn = connect('name')
 
 function sendChat (message) {
-  sw.peers.forEach((peer) => {
-    peer.send(JSON.stringify({
-      type: 'chat',
-      payload: message
-    }))
-  })
+  conn.broadcast('chat', message)
 }
 
-function onreceive (peer, pack) {
-  const { type, payload } = JSON.parse(pack.toString('utf8'))
+conn.on('data', onreceive)
+function onreceive (peer, { type, payload }) {
   if (type === 'nick') {
     model.setUserName(peer.id, payload)
   }
   if (type === 'chat') {
-    model.chatMessage(peer.id, payload)
+    model.receiveChat(peer.id, payload)
   }
 }
 

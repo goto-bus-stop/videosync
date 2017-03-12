@@ -10,27 +10,37 @@
     "bel": "^4.5.1",
     "cache-element": "^2.0.1",
     "choo": "yoshuawuyts/choo#v5",
+    "on-load": "^3.2.0",
     "sheetify": "^6.0.1",
     "signalhub": "^4.8.0",
     "tachyons": "^4.6.2",
     "video.js": "^5.17.0",
     "videojs-vimeo": "^2.0.2",
     "videojs-youtube": "^2.3.2",
-    "webrtc-swarm": "^2.8.0"
+    "webrtc-swarm": "^2.8.0",
+    "yo-yoify": "^3.5.0"
   },
   "devDependencies": {
+    "babel-plugin-yo-yoify": "^0.3.2",
+    "babel-preset-env": "^1.2.1",
+    "babelify": "^7.3.0",
     "browserify": "^14.1.0",
+    "css-extract": "^1.2.0",
     "ecstatic": "^2.1.0",
+    "uglify-js": "^2.8.12",
     "watchify": "^3.9.0"
   },
-  "browserify": {
-    "transform": [
-      "sheetify/transform"
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "yo-yoify"
     ]
   },
   "scripts": {
-    "build": "browserify app.js > bundle.js",
-    "watch": "watchify app.js -o bundle.js",
+    "build": "browserify app.js -t sheetify/transform -t babelify -p [ css-extract -o bundle.css ] | uglifyjs -cmo bundle.js",
+    "watch": "echo '' > bundle.css && watchify app.js -t sheetify/transform -o bundle.js",
     "start": "ecstatic . -p 3001 --cache 0"
   }
 }

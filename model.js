@@ -2,6 +2,7 @@ module.exports = (state, emitter) => {
   state.users = {}
   state.chat = []
   state.video = {
+    paused: false,
     url: 'https://youtu.be/M3GAkXvKQ4c'
   }
 
@@ -27,6 +28,25 @@ module.exports = (state, emitter) => {
     receiveChat({ sender: state.swarm.me, message })
   }
 
+  function pause ({ broadcast = true } = {}) {
+    state.video = Object.assign({}, state.video, { paused: true })
+
+    if (broadcast) emitter.emit('broadcast', { type: 'pause' })
+
+    updated()
+  }
+
+  function resume ({ time, broadcast = true } = {}) {
+    state.video = Object.assign({}, state.video, {
+      paused: false,
+      continueAt: time
+    })
+
+    if (broadcast) emitter.emit('broadcast', { type: 'resume', payload: time })
+
+    updated()
+  }
+
   function receiveChat ({ sender, message }) {
     state.chat.push({ sender, message, time: new Date() })
     updated()
@@ -43,9 +63,17 @@ module.exports = (state, emitter) => {
     if (type === 'chat') {
       receiveChat({ sender: peer.id, message: payload })
     }
+    if (type === 'pause') {
+      pause({ broadcast: false })
+    }
+    if (type === 'resume') {
+      resume({ broadcast: false, time: payload })
+    }
   }
 
   emitter.on('sendChat', sendChat)
+  emitter.on('resume', resume)
+  emitter.on('pause', pause)
 
   emitter.on('self', onself)
   emitter.on('message', onreceive)

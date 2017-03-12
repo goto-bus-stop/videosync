@@ -5,7 +5,7 @@ const swarm = require('webrtc-swarm')
 module.exports = function connect (name) {
   return (state, emitter) => {
     const hub = signalhub('videosync', [
-      'http://localhost:3000'
+      'https://videosync-hub-lhhpleecyz.now.sh'
     ])
     const sw = swarm(hub)
 

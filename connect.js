@@ -9,6 +9,7 @@ module.exports = function connect (name) {
     ])
     const sw = swarm(hub)
 
+    let first = true
     sw.on('connect', (peer, id) => {
       peer.id = id
 
@@ -23,6 +24,13 @@ module.exports = function connect (name) {
           JSON.parse(pack.toString('utf8'))
         ))
       })
+
+      // We're connecting to our very first other peer
+      if (first && !peer.initiator) {
+        peer.send(JSON.stringify({ type: 'state?' }))
+      }
+
+      first = false
     })
 
     function broadcast ({ type, payload }) {

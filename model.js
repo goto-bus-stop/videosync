@@ -84,6 +84,27 @@ module.exports = (state, emitter) => {
   }
 
   function onreceive ({ peer, type, payload }) {
+    // New peer requested the current state.
+    if (type === 'state?') {
+      peer.send(JSON.stringify({
+        type: 'state',
+        payload: {
+          video: state.video ? Object.assign({}, state.video, {
+            continueAt: state.player.currentTime(),
+            time: undefined
+          }) : null,
+          queue: state.queue
+        }
+      }))
+    }
+    // Received the current state from a peer.
+    if (type === 'state') {
+      state.video = payload.video
+      state.queue = payload.queue
+
+      updated()
+    }
+
     if (type === 'nick') {
       setUserName({ user: peer.id, name: payload })
     }
@@ -109,6 +130,10 @@ module.exports = (state, emitter) => {
 
   emitter.on('self', onself)
   emitter.on('message', onreceive)
+
+  emitter.on('player', (player) => {
+    state.player = player
+  })
 
   window.add = enqueueSelf
 }

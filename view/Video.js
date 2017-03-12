@@ -57,6 +57,8 @@ module.exports = function Video () {
         ]
       })
 
+      _emit('player', player)
+
       player.on('ended', () => {
         _emit('nextVideo')
       })
@@ -69,6 +71,9 @@ module.exports = function Video () {
         player.src([
           source
         ])
+        if (video.continueAt) {
+          player.currentTime(video.continueAt)
+        }
       }
 
       if (video.paused && !player.paused()) {

@@ -3,6 +3,8 @@ const widget = require('cache-element/widget')
 const videojs = require('video.js')
 const techs = require('../techs')
 
+const buttonClass = 'pointer bg-white hover-bg-light-pink b--dark-pink br2 ba mh2 ph2'
+
 module.exports = function Video () {
   let player
   let source
@@ -14,24 +16,23 @@ module.exports = function Video () {
       source = techs.getSource(video.url)
 
       playButton = html`
-        <button onclick=${play}>
+        <button class=${buttonClass} onclick=${play}>
           ►
         </button>
       `
       pauseButton = html`
-        <button onclick=${pause}>
+        <button class=${buttonClass} onclick=${pause}>
           ⏸
         </button>
       `
 
       return html`
         <div class="w-100 h-100 relative hide-child">
-          <video
-            autoplay
-            controls
-            class="video-js w-100 h-100">
-          </video>
-          <div class="absolute bottom-0 left-0 child black bg-lightest-blue">
+          <video autoplay class="video-js w-100 h-100"></video>
+          <div class="absolute w-100 h-100 top-0 left-0">
+            <!-- Prevent clicks -->
+          </div>
+          <div class="absolute bottom-0 left-0 child black pv1">
             ${playButton}
             ${pauseButton}
           </div>

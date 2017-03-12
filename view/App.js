@@ -17,12 +17,8 @@ module.exports = function App (state, emit) {
     <body class="vh-100">
       <div class="fl w-75 h-100 ${prefix}">
         <div class="pv1 ph2 bg-dark-gray white">
-          ${next && html`
-            <span>
-              <strong>Next Up:</strong>
-              ${next.url} (${state.users[next.user].name})
-            </span>
-          `}
+          <strong>Next Up:</strong>
+          ${next ? `${next.url} (${state.users[next.user].name})` : 'Nothing!'}
         </div>
         <div class="video h-100">
           ${video(state.video, emit)}

@@ -31,15 +31,28 @@ module.exports = (state, emitter) => {
 
   function enqueue ({ user, url }) {
     state.queue.push({ user, url })
-
-    updated()
+    if (!state.video && state.queue.length === 1) {
+      nextVideo()
+    } else {
+      updated()
+    }
   }
 
   function enqueueSelf (url) {
     const user = state.swarm.me
     enqueue({ user, url })
 
-    emitter.emit('broadcast', 'enqueue', { user, url })
+    emitter.emit('broadcast', { type: 'enqueue', payload: url })
+  }
+
+  function nextVideo () {
+    state.video = state.queue.shift()
+    if (state.video) {
+      state.video.time = Date.now()
+      state.video.paused = false
+    }
+
+    updated()
   }
 
   function pause ({ broadcast = true } = {}) {
@@ -90,6 +103,7 @@ module.exports = (state, emitter) => {
 
   emitter.on('sendChat', sendChat)
   emitter.on('queue', enqueueSelf)
+  emitter.on('nextVideo', nextVideo)
   emitter.on('resume', resume)
   emitter.on('pause', pause)
 

@@ -10,9 +10,11 @@ module.exports = function Video () {
   let source
   let playButton
   let pauseButton
+  let _emit
 
   return widget({
     render: (video, emit) => {
+      _emit = emit
       source = techs.getSource(video.url)
 
       playButton = html`
@@ -53,6 +55,10 @@ module.exports = function Video () {
         sources: [
           source
         ]
+      })
+
+      player.on('ended', () => {
+        _emit('nextVideo')
       })
     },
 

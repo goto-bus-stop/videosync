@@ -1,0 +1,9 @@
+{
+  "name": "videosync-hub",
+  "dependencies": {
+    "signalhub": "^4.8.0"
+  },
+  "scripts": {
+    "start": "node index"
+  }
+}

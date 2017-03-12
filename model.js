@@ -5,6 +5,7 @@ module.exports = (state, emitter) => {
     paused: false,
     url: 'https://youtu.be/M3GAkXvKQ4c'
   }
+  state.queue = []
 
   function updated () {
     emitter.emit('render')
@@ -26,6 +27,19 @@ module.exports = (state, emitter) => {
   function sendChat (message) {
     emitter.emit('broadcast', { type: 'chat', payload: message })
     receiveChat({ sender: state.swarm.me, message })
+  }
+
+  function enqueue ({ user, url }) {
+    state.queue.push({ user, url })
+
+    updated()
+  }
+
+  function enqueueSelf (url) {
+    const user = state.swarm.me
+    enqueue({ user, url })
+
+    emitter.emit('broadcast', 'enqueue', { user, url })
   }
 
   function pause ({ broadcast = true } = {}) {
@@ -69,17 +83,18 @@ module.exports = (state, emitter) => {
     if (type === 'resume') {
       resume({ broadcast: false, time: payload })
     }
+    if (type === 'enqueue') {
+      enqueue({ user: peer.id, url: payload })
+    }
   }
 
   emitter.on('sendChat', sendChat)
+  emitter.on('queue', enqueueSelf)
   emitter.on('resume', resume)
   emitter.on('pause', pause)
 
   emitter.on('self', onself)
   emitter.on('message', onreceive)
 
-  window.changeVideo = (url) => {
-    state.video = Object.assign({}, state.video, { url })
-    updated()
-  }
+  window.add = enqueueSelf
 }
